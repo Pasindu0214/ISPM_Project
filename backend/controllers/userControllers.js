@@ -1,5 +1,41 @@
 const User = require('../models/userModel.js')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken');
+
+// Function to generate a JWT token
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: '2h',
+    });
+}
+
+// User login
+const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        // Check if the user exists
+        const user = await User.findOne({ email });
+
+        if (user && (password === user.password)) {
+            // If user exists and password matches, return a token
+            res.json({
+                _id: user._id,
+                fname: user.fname,
+                lname: user.lname,
+                email: user.email,
+                role: user.role,
+                token: generateToken(user._id),
+            });
+        } else {
+            res.status(401).json({ message: 'Invalid email or password' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 
 //GET all workouts
 const getUsers = async (req, res) => {
@@ -87,5 +123,6 @@ module.exports = {
     getUser,
     createUser,
     deleteUser,
-    updateUser
+    updateUser,
+    loginUser
 }

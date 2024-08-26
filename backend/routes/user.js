@@ -4,11 +4,15 @@ const {
     getUser,
     createUser,
     deleteUser,
-    updateUser
+    updateUser,
+    loginUser
 } = require('../controllers/userControllers')
 
 
 const router = express.Router() 
+
+//login
+router.post('/', loginUser)
 
 //GET all workouts
 router.get('/', getUsers)
@@ -24,6 +28,7 @@ router.delete('/:id', deleteUser)
 
 //UPDATE a workout
 router.patch('/:id', updateUser)
+
 
 
 module.exports = router

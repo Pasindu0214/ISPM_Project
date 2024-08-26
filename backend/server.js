@@ -16,7 +16,8 @@ app.use((req, res, next) => {
 })
 
 //routes
-app.use('/api/user',userRoutes)
+app.use('/api/register',userRoutes)
+app.use('/api/login',userRoutes)
 
 
 //connect to mongodb
