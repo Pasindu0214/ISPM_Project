@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const workoutSchema = new Schema({
+const userSchema = new Schema({
     fname: {
         type: String,
         required: true
@@ -24,10 +24,14 @@ const workoutSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    role:{
+        type: String,
+        required:true
     }
 
     
 }, {timestamps: true})
 
-module.exports = mongoose.model('Workout',workoutSchema)
+module.exports = mongoose.model('User',userSchema)
 
